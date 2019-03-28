@@ -1,0 +1,54 @@
+#默认使用配置
+spring:
+  profiles:
+    active: dev
+
+  application:
+    name: tinyURLServer
+
+#保证多个spring boot war在同一个容器中运行配置为不一样
+  jmx:
+    #default-domain: tinyURLServer
+    enabled: false
+
+#公共配置与profiles选择无关
+mybatis:
+  typeAliasesPackage: com.tinyu.entity
+  mapperLocations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: false #开启驼峰命名转换
+
+---
+#开发配置
+spring:
+  profiles: dev
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/tinyurldb?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+
+server:
+  port: 8084
+#  ssl:
+#    key-store: keystore.p12
+#    key-store-password: 123456
+#    keyStoreType: PKCS12
+#    keyAlias: tomcat
+
+# 安全端点
+management:
+  security:
+   enabled: false
+
+  port: 9004
+
+logging:
+  file: /var/tmp/tinyurl/logs/tinyurl_ser_log.log
+  level:
+    root: INFO
+
+message:
+  domain: http:localhost:8084/view/
+  txtFilePath: D://var/count.txt   # 短网址访问统计

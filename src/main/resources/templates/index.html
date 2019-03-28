@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div>
+    <h2>测试</h2>
+    <h1>访问统计</h1>
+    <form method="POST" enctype="multipart/form-data" th:action="@{/view/count}">
+        <p>
+            <input type="submit" value="获取访问统计"/>
+            <label th:if="${body}" th:text="${body}" style="color:red;"></label>
+        </p>
+    </form>
+</div>
+</body>
+</html>

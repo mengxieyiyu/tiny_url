@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tinyu.dao.TinyUrlDao" >
+    <resultMap id="BaseResultMap" type="com.tinyu.entity.TinyUrl" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="short_url" property="shortUrl" jdbcType="VARCHAR" />
+        <result column="long_url" property="longUrl" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id,short_url,long_url,update_time,create_time,status
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from tiny_url
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectByShortUrl" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from tiny_url
+        where short_url = #{shortUrl,jdbcType=VARCHAR} AND status = 1
+    </select>
+    <select id="selectByLongUrl" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from tiny_url
+        where long_url = #{longUrl,jdbcType=VARCHAR} AND status = 1
+    </select>
+    <select id="selectByList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tiny_url
+        where status = 1
+    </select>
+    <insert id="insert" parameterType="com.tinyu.entity.TinyUrl" >
+        insert into tiny_url (short_url, long_url,create_time,update_time,status)
+        values (#{shortUrl,jdbcType=VARCHAR}, #{longUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP},#{status,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.tinyu.entity.TinyUrl" >
+        insert into tiny_url
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="shortUrl != null" >
+                short_url,
+            </if>
+            <if test="longUrl != null" >
+                long_url,
+            </if>
+            <if test="createTime != null" >
+                create_time,
+            </if>
+            <if test="updateTime != null" >
+                update_time,
+            </if>
+            <if test="status != null" >
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="shortUrl != null" >
+                #{shortUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="longUrl != null" >
+                #{longUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+               #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null" >
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.tinyu.entity.TinyUrl" >
+        update tiny_url
+        <set >
+            <if test="id != null" >
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="shortUrl != null" >
+                short_url = #{shortUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="longUrl != null" >
+                long_url = #{longUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null" >
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
