@@ -52,3 +52,6 @@ logging:
 message:
   domain: http:localhost:8084/view/
   txtFilePath: D://var/count.txt   # 短网址访问统计
+  shorten:
+    method: md5 # 根据方法名指定短网址算法， 1.默认为MD5;  2.shortenBySequence: 自增序列
+    length: 6       # 短网址长度 1.MD5算法有效

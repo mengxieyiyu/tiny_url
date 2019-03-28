@@ -7,6 +7,7 @@ import com.tinyu.utils.GeneratorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
@@ -21,6 +22,12 @@ public class TinyUrlServiceImpl implements TinyUrlService {
 
     @Autowired
     private TinyUrlDao tinyUrlDao;
+
+    @Value("${message.shorten.method}")
+    private String shortenMethod;
+
+    @Value("${message.shorten.length}")
+    private int shortenLength;
 
     /**
      * get long url
@@ -51,7 +58,7 @@ public class TinyUrlServiceImpl implements TinyUrlService {
             }
 
             // not exist, create new.
-            String shortUrl = GeneratorUtil.shorten(longUrl);
+            String shortUrl = GeneratorUtil.autoCreateShorten(longUrl, shortenMethod, shortenLength);
             // save to db
             TinyUrl save = new TinyUrl();
             save.setLongUrl(longUrl);

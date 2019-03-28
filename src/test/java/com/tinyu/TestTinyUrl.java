@@ -1,6 +1,7 @@
 package com.tinyu;
 
 import com.tinyu.service.TinyUrlService;
+import com.tinyu.utils.GeneratorUtil;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,5 +32,17 @@ public class TestTinyUrl extends BaseTest {
         int result = tinyUrlService.saveTinyUrl(key, longUrl);
 
         System.out.println("result: " + result);
+    }
+
+    @Test
+    public void shortCreate() {
+        try {
+            String method = "shortenBySequence"; //shortenBySequence   md5
+            String longUrl = "https://music.163.com/#/discover/playlist/fasdgao";
+            String shortUrl = GeneratorUtil.autoCreateShorten(longUrl, method, 6);
+            System.out.println(method + " shortUrl: " + shortUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
